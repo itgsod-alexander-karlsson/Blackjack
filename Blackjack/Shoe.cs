@@ -7,16 +7,54 @@ namespace Blackjack
 {
     public class Shoe
     {
-        private Card[] cards;
+        private const int   CardsPerDeck = 52;
+
+        private Card[]  cards;
+        private int     numberOfDecks = 2;
+        private int     shoeLocation;
+
+    public delegate void ShoeEventHandler(object sender, EventArgs e);
+
+    public event ShoeEventHandler EndofShoeEvent;
+    public event ShoeEventHandler ShuffleEvent;
+
+    public int NumberOfDecks 
+    { 
+        get
+        {
+            return numberOfDecks; 
+        }
+        set
+        {
+            
+           if (numberOfDecks != value) 
+               numberOfDecks = value; 
+        }
     }
 
-    for(int k=0; k<2; k++)
-    {
-        foreach(Player player in players)
-        {
-            player.GetHands()[0].Add(shoe.Next());
-        }
-        dealer.Hand.Add(shoe.Next());
+    public int ShoeLocation 
+    { 
+        get{ return shoeLocation; }
     }
+
+    public void Init()
+    {
+        shoeLocation = 0;
+
+        cards = new Card[numberOfDecks * CardsPerDeck];
+        int current = 0;
+
+        for ( int j=0; j < 4; j++)
+        {
+             for (int y = 0; y < 4; y++)
+        {
+                 for (int x = 0; x < 13; x++)
+                 {
+                     cards[current++] = new Card (Card.CardType)x, (Card.Suits)y );
+                 }
+             }
+        }
+    }
+
     
 }
